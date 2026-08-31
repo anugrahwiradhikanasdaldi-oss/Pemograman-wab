@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>SIMPUS-Mini | Beranda</title>
+    <style> 
+    /* ===== Reset & Base ===== */
+        * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        }
+        a {color: #1d5b8a; text-decoration: none;}
+        a:hover {text-decoration: underline;}
+        /* ===== Header & Navbar (Flexbox) ===== */
+        header {
+            background-color: #1d5b8a;
+            color: #fff;
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        header h1 {
+            font-size: 1.4rem;
+        }
+
+        header nav ul {
+            list-style: none;
+            display: flex;
+            gap: 1.25rem;
+        }
+
+        header nav a {
+            color: #fff;
+            font-weight: 500;}
+        /* ===== Main Layout ===== */
+        main {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;}
+
+        section {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);}
+
+        section h2 {
+            margin-bottom: 1rem;
+            color: #1d5b8a;}
+        main section:nth-of-type(2) {
+            display: grid;
+            gap: 1 rem;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>SIMPUS-Mini</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Beranda</a></li>
+                <li><a href="buku/list.html">Daftar Buku</a></li>
+                <li><a href="buku/tambah.html">Tambah Buku</a></li>
+                <li><a href="anggota/list.html">Daftar Anggota</a></li>
+                <li><a href="anggota/tambah.html">Tambah Anggota</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section>
+            <h2>Selamat Datang di Sistem Perpustakaan Mini</h2>
+            <p>Aplikasi sederhana untuk mengelola data buku dan anggota perpustakaan.</p>
+        </section>
+
+        <section>
+            <h2>Ringkasan</h2>
+            <article>
+                <h3>Total Buku</h3>
+                <p>12</p>
+            </article>
+            <article>
+                <h3>Total Anggota</h3>
+                <p>8</p>
+            </article>
+            <article>
+                <h3>Sedang Dipinjam</h3>
+                <p>3</p>
+            </article>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 SIMPUS-Mini &mdash; Jobsheet 1</p>
+    </footer>
+</body>
+</html>
