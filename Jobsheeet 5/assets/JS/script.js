@@ -8,7 +8,6 @@ function initNavToggle() {
         nav.classList.toggle("nav-open");
     });
 }
-
 // ===== Konfirmasi hapus (front-end only, belum ke server) =====
 function initHapusConfirm() {
     document.querySelectorAll(".btn-hapus").forEach(function (btn) {
@@ -27,16 +26,44 @@ function initHapusConfirm() {
 function initTableFilter() {
     const input = document.getElementById("search-input");
     const table = document.querySelector(".table-responsive table");
+    const counter = document.getElementById("table-counter");
+
     if (!input || !table) return;
+
+    function updateCounter() {
+        const rows = table.querySelectorAll("tbody tr");
+        let jumlah = 0;
+
+        rows.forEach(function (row) {
+            if (row.style.display !== "none") {
+                jumlah++;
+            }
+        });
+
+        if (counter) {
+            counter.textContent =
+                "Menampilkan " + jumlah + " dari " + rows.length + " buku";
+        }
+    }
 
     input.addEventListener("keyup", function () {
         const keyword = input.value.toLowerCase();
         const rows = table.querySelectorAll("tbody tr");
+
         rows.forEach(function (row) {
-            const teks = row.textContent.toLowerCase();
+            const kolomJudul = row.querySelector("td");
+
+            const teks = kolomJudul
+                ? kolomJudul.textContent.toLowerCase()
+                : "";
+
             row.style.display = teks.includes(keyword) ? "" : "none";
         });
+
+        updateCounter();
     });
+
+    updateCounter();
 }
 
 // ===== Validasi form (client-side) =====
@@ -100,8 +127,21 @@ function initValidasiForm() {
             }
         }
 
-        if (!valid) {
-            e.preventDefault();
+        const isbn = form.querySelector("[name='isbn']");
+
+        if (isbn) {
+            const nilai = isbn.value.trim();
+            const polaISBN = /^[0-9-]+$/;
+
+            if (nilai !== "" && !polaISBN.test(nilai)) {
+                tampilkanError(
+                    isbn,
+                    "ISBN hanya boleh berisi angka dan tanda hubung (-)."
+                );
+                valid = false;
+            } else {
+                hapusError(isbn);
+            }
         }
     });
 }

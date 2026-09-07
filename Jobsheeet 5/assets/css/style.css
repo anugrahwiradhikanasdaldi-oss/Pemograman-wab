@@ -209,11 +209,12 @@ footer {
     }
 }
 /*mobile*/
-@media (max-width: 600px){
+@media (max-width: 600px) {
     header {
         position: relative;
     }
-     .nav-toggle-label {
+
+    .nav-toggle-label {
         display: block;
     }
 
@@ -222,10 +223,17 @@ footer {
         width: 100%;
         order: 3;
         margin-top: 1rem;
+
+        /* Animasi hamburger */
+        opacity: 0;
+        transform: translateY(-10px);
+        transition: opacity 0.3s ease, transform 0.3s ease;
     }
 
     header nav.nav-open {
-    display: block;
+        display: block;
+        opacity: 1;
+        transform: translateY(0);
     }
 
     header nav ul {
@@ -241,20 +249,23 @@ footer {
     form select {
         max-width: 100%;
     }
+
     .error {
-    display: block;
-    color: #d9534f;
-    font-size: 0.85rem;
-    margin-top: 0.25rem;
+        display: block;
+        color: #d9534f;
+        font-size: 0.85rem;
+        margin-top: 0.25rem;
     }
+
     .search-box {
-    margin-bottom: 1rem;
+        margin-bottom: 1rem;
     }
+
     .search-box input {
-    width: 100%;
-    max-width: 320px;
-    padding: 0.5rem 0.75rem;
-    border: 1px solid #cdd4da;
-    border-radius: 4px;
+        width: 100%;
+        max-width: 320px;
+        padding: 0.5rem 0.75rem;
+        border: 1px solid #cdd4da;
+        border-radius: 4px;
     }
 }
