@@ -8,8 +8,12 @@ function initNavToggle() {
         nav.classList.toggle("nav-open");
     });
 }
-// ===== Konfirmasi hapus (front-end only, belum ke server) =====
 
+// ===== Konfirmasi hapus =====
+// Tombol Hapus kini berada di dalam <form class="form-hapus" method="post">
+// yang benar-benar mengirim request DELETE ke server (buku/hapus.php,
+// anggota/hapus.php). Konfirmasi dilakukan pada event "submit" agar bisa
+// dibatalkan (preventDefault) sebelum request terkirim.
 function initHapusConfirm() {
     document.addEventListener("submit", function (e) {
         const form = e.target;
@@ -28,44 +32,16 @@ function initHapusConfirm() {
 function initTableFilter() {
     const input = document.getElementById("search-input");
     const table = document.querySelector(".table-responsive table");
-    const counter = document.getElementById("table-counter");
-
     if (!input || !table) return;
-
-    function updateCounter() {
-        const rows = table.querySelectorAll("tbody tr");
-        let jumlah = 0;
-
-        rows.forEach(function (row) {
-            if (row.style.display !== "none") {
-                jumlah++;
-            }
-        });
-
-        if (counter) {
-            counter.textContent =
-                "Menampilkan " + jumlah + " dari " + rows.length + " buku";
-        }
-    }
 
     input.addEventListener("keyup", function () {
         const keyword = input.value.toLowerCase();
         const rows = table.querySelectorAll("tbody tr");
-
         rows.forEach(function (row) {
-            const kolomJudul = row.querySelector("td");
-
-            const teks = kolomJudul
-                ? kolomJudul.textContent.toLowerCase()
-                : "";
-
+            const teks = row.textContent.toLowerCase();
             row.style.display = teks.includes(keyword) ? "" : "none";
         });
-
-        updateCounter();
     });
-
-    updateCounter();
 }
 
 // ===== Validasi form (client-side) =====
@@ -129,65 +105,11 @@ function initValidasiForm() {
             }
         }
 
-        const isbn = form.querySelector("[name='isbn']");
-
-        if (isbn) {
-            const nilai = isbn.value.trim();
-            const polaISBN = /^[0-9-]+$/;
-
-            if (nilai !== "" && !polaISBN.test(nilai)) {
-                tampilkanError(
-                    isbn,
-                    "ISBN hanya boleh berisi angka dan tanda hubung (-)."
-                );
-                valid = false;
-            } else {
-                hapusError(isbn);
-            }
+        if (!valid) {
+            e.preventDefault();
         }
     });
 }
-// Mengambil & menampilkan Daftar Buku secara asinkron dari data/buku.json
-    async function muatDaftarBuku() {
-        const tbody = document.querySelector(".table-responsive table tbody");
-        const loading = document.getElementById("loading-indicator");
-        if (!tbody) return;
-
-        loading.style.display = "block";
-        tbody.innerHTML = "";
-
-    try {
-// simulasi delay jaringan agar loading indicator terlihat
-        await new Promise((resolve) => setTimeout(resolve, 600));
-
-        const res = await fetch("../data/buku.json");
-        if (!res.ok) {
-            throw new Error("Gagal mengambil data (status " + res.status + ")");
-        }
-        const daftarBuku = await res.json();
-
-        daftarBuku.forEach(function (buku) {
-            const tr = document.createElement("tr");
-            tr.innerHTML =
-                "<td>" + buku.judul + "</td>" +
-                "<td>" + buku.pengarang + "</td>" +
-                "<td>" + buku.tahun + "</td>" +
-                "<td>" + buku.stok + "</td>" +
-                "<td>" +
-                "<button type=\"button\">Edit</button> " +
-                "<button type=\"button\" class=\"btn-hapus\">Hapus</button>" +
-                "</td>";
-            tbody.appendChild(tr);
-        });
-    } catch (err) {
-        tbody.innerHTML =
-            "<tr><td colspan=\"5\">Gagal memuat data: " + err.message + "</td></tr>";
-    } finally {
-        loading.style.display = "none";
-    }
-}
-
-document.addEventListener("DOMContentLoaded", muatDaftarBuku);
 
 document.addEventListener("DOMContentLoaded", function () {
     initNavToggle();
