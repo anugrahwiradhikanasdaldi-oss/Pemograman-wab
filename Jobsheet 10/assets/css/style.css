@@ -383,4 +383,21 @@ footer {
     .pagination a {
         padding: 0.35rem 0.6rem;
     }
+    /* ===== Status Login di Header ===== */
+    .auth-status {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        color: #fff;
+    }
+
+    .auth-status a {
+        color: #fff;
+        font-weight: 600;
+        text-decoration: none;
+    }
+
+    .auth-status a:hover {
+        text-decoration: underline;
+    }
 }
